@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sun Feb 16 13:00:33 2020
-
 @author: ARPIT
 """
 import re
 #add $s1,$s2,AA$s3
 #print(re.split('sum','sum, sum '))
-test='beq $q1, $s2 ,s3 //sub $s1 , $s2, $s3'
+test='beq &s1, $s2 ,$zero //sub $s1 , $s2, $s3'
 sep = '//'
 rest = test.split(sep, 1)[0]
 print (rest)
-expr=re.compile('(\s*\w\w\w\s*\W\w\d\s*,\s*\W\w\d\s*,\s*\W\w\d\s*)|(\s*\w\w\w\s\W\w\d\s*,\s*\W\w\d\s*,\s*(\w|\d)*\s*)')
+expr=re.compile('(\s*\w\w\w\s*[$]\w\d\s*,\s*[$]\w\d\s*,\s*[$](\w\d|zero)\s*)')
 mo=expr.search(rest)
 
 if mo:
