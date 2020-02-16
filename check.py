@@ -1,35 +1,64 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Feb 16 13:00:33 2020
-@author: ARPIT
-"""
+
 import re
-#add $s1,$s2,AA$s3
-#print(re.split('sum','sum, sum '))
-test='beq $s1, $zero ,help //sub $s1 , $s2, $s3'
-sep = '//'
-rest = test.split(sep, 1)[0]
-print (rest)
-expr=re.compile(' (\s*\w\w\w\s*\$\w\d\s*,\s*\$(\w\d|zero)\s*,\s*\$(\w\d|zero)\s*)')
+f=open("check.s",'r')
+text=f.readlines()
 
-"""
-adding new regex expressions, check once
-ADD/SUB/AND/SLT->  (\s*\w\w\w\s*\$\w\d\s*,\s*\$(\w\d|zero)\s*,\s*\$(\w\d|zero)\s*)
-BNE/BEQ->  (\s*\w\w\w\s*\$(\w\d|zero)\s*,\s*\$(\w\d|zero)\s*,\s*(\w|\d)*\s*)
-jump->   (\s*[j]\s*(\w|\d)*)
-LW/SW->  (\s*\w\w\s*\$\w\d\s*,(\s*(\d\(\$\w\d\))|(0x\d*)))
-jump register->   
-@arpit: discuss LW,SW with me once
-"""
+for test in text:
+    sep = '//'
+    rest = test.split(sep, 1)[0]
+    
+    flag=False
+    # flag is used to keep the track of the number of instructions compiled in a step
+    #for add sub and so on:)
+    expr=re.compile('(\s*\w\w\w\s*\$\w\d\s*,\s*\$(\w\d|zero)\s*,\s*\$(\w\d|zero)\s*)')
+    mo=expr.search(rest)
+    
+    if mo:
+        flag=True
+        ch=mo.group()
+        ch=re.split('\W|,|$',ch)
+        instr=[]
+        for i in ch:
+            if i:
+                instr.append(i)
+        print(instr)
+    
+    if flag is not True: #for bne and beq
+        expr = re.compile('(\s*\w\w\w\s*\$(\w\d|zero)\s*,\s*\$(\w\d|zero)\s*,\s*(\w|\d)*\s*)')
+        mo=expr.search(rest)
+        if mo:
+            flag=True
+            ch=mo.group()
+            ch=re.split('\W|,|$',ch)
+            instr=[]
+            for i in ch:
+                if i:
+                    instr.append(i)
+            print(instr)
+            
+    if flag is not True:  # for jump
+        expr = re.compile('(\s*[j]\s\s*(\w|\d)*)')
+        mo=expr.search(rest)
+        if mo:
+            flag=True
+            ch=mo.group()
+            ch=re.split('\W|,|$',ch)
+            instr=[]
+            for i in ch:
+                if i:
+                    instr.append(i)
+            print(instr)
+            
+    if flag is not True:  # for LW and SW
+        expr = re.compile('(\s*\w\w\s*\$\w\d\s*,(\s*(\d\(\$\w\d\))|(0x\d*)))')
+        mo=expr.search(rest)
+        if mo:
+            flag=True
+            ch=mo.group()
+            ch=re.split('\W|,|$',ch)
+            instr=[]
+            for i in ch:
+                if i:
+                    instr.append(i)
+            print(instr)
 
-mo=expr.search(rest)
-
-if mo:
-    ch=mo.group()
-    ch=re.split('\W|,|$',ch)
-    instr=[]
-    for i in ch:
-        if i:
-            instr.append(i)
-    print(instr)
-#print(re.split('sum','sum arpit'))
