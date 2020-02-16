@@ -6,7 +6,9 @@ text=f.readlines()
 for test in text:
     sep = '//'
     rest = test.split(sep, 1)[0]
-    
+    if not rest:
+        #print("empty")
+        continue
     flag=False
     # flag is used to keep the track of the number of instructions compiled in a step
     #for add sub and so on:)
@@ -61,4 +63,6 @@ for test in text:
                 if i:
                     instr.append(i)
             print(instr)
-
+    if flag is not True:
+        print("Invalid Syntax")
+        break
