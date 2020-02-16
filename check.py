@@ -1,8 +1,17 @@
 
 import re
+
+def sep(text):
+    data_index=0
+    command_index=0
+    #for check in text:
+        
+    index=1
+    return text[:index],text[index+1:]
 f=open("check.s",'r')
 text=f.readlines()
-
+print(text[0])
+dataseg,command=sep(text)
 for test in text:
     sep = '//'
     rest = test.split(sep, 1)[0]
