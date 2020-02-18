@@ -1,5 +1,12 @@
-add $s1,$s2,$s3
-bne $d1,$s2,label1
-j help
-lw $s1,0($s3)
+.data
+.text
+check .word 23, 12,123
+.globl main
+
+beq $a1,$a2,label2
+sub $a3,$a1,$a2
+label2:
+add $a3,$a1,$a2
+la $a4, 0x10000004
+sw $a3, 4($a4)
 //helloe
