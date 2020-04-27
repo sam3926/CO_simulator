@@ -13,7 +13,9 @@ for i in range(1024):
     mem.append(0)
 
 mem_index=0    
+
 #print(reg)
+print(reg)
 
 def sep(text):
     data_index_start=0
@@ -265,6 +267,11 @@ def storewordr(instr):
         #print(memindex,'dd')
         mem[int(memindex)]=reg[int(regindex1)]
         print(mem[int(memindex)])
+=======
+#data segment ends now
+# command segment works from here
+
+
 
 def simplopr(command):
     index=[]
@@ -394,8 +401,13 @@ while g<(len(command)-1):
             print(g)
             print(instr)
      
+
     if flag is not True:  # for LW,LA,SW with register as reference 
         expr = re.compile('(\s*\w\w\s*\$\w\d\s*,\s*((\$\w\d)|(\d\(\$\w\d\))))')   
+
+    if flag is not True:  # for LW and SW
+        expr = re.compile('(\s*\w\w\s*\$\w\d\s*,(\s*(\d\(\$\w\d\))|(0x\d*)))')
+
         mo=expr.search(rest)
         if mo:
             flag=True
@@ -406,6 +418,7 @@ while g<(len(command)-1):
                 if i:
                     instr.append(i)
             print(instr)
+
             if instr[0]=='lw':
                 loadwordr(instr)
                 print("kload")
@@ -435,6 +448,7 @@ while g<(len(command)-1):
                 storeworda(instr)
             elif instr[0]=='la':
                 loadadda(instr)
+
 
     
     if flag is not True:

@@ -1,12 +1,14 @@
 .data
-.text
-check .word 23, 12,123
+.word 7, 7, 8, 5, 2
 .globl main
 
-beq $a1,$a2,label2
-sub $a3,$a1,$a2
-label2:
+la $a0, 0x10000000 
+lw $a1, 0($a0)
+lw $a2, 0($a0)
+beq $a1,$a2,label
 add $a3,$a1,$a2
-la $a4, 0x10000004
-sw $a3, 4($a4)
-//helloe
+label:
+add $a2,$a4,$a1
+lw $a2,4($a0)
+addi $a2,$a2,1
+
